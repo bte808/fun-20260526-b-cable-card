@@ -16,6 +16,7 @@ WhatCable reads cable capability data where the platform allows it. Cable Card i
 - Download a JSON export for one cable.
 - Print a label-sized card.
 - Save recent cards in local browser storage.
+- Export the saved drawer as a CSV inventory.
 - Run fully offline after the page is loaded.
 
 ## Why it is useful
@@ -41,6 +42,7 @@ http://localhost:5196
 1. Fill the cable facts or use the included sample.
 2. Review the generated capability card.
 3. Copy the Markdown, save JSON, print a label, or add it to the local drawer.
+4. Export the drawer CSV when you want a small inventory sheet.
 
 ## Validation
 
@@ -55,7 +57,7 @@ The app has no runtime dependencies. Tests use Node's built-in test runner.
 
 ## Future ideas
 
-- Add CSV import/export for a whole cable drawer.
+- Add CSV import for a whole cable drawer.
 - Add a compact sheet layout for printing many labels at once.
 - Add custom label sizes.
 - Add a simple benchmark log for repeated transfer tests.

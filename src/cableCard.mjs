@@ -77,6 +77,47 @@ export function generateCableCard(input = {}) {
   };
 }
 
+export function toDrawerCsv(items = []) {
+  const headers = [
+    "name",
+    "location",
+    "connector",
+    "lengthM",
+    "color",
+    "source",
+    "maxWatts",
+    "dataGbps",
+    "videoVerified",
+    "eMarker",
+    "confidence",
+    "strengths",
+    "flags",
+    "nextChecks"
+  ];
+
+  const rows = items.map((item) => {
+    const cable = normalizeCable(item?.cable ?? {});
+    return [
+      cable.name,
+      cable.location,
+      cable.connector,
+      cable.lengthM ?? "",
+      cable.color,
+      cable.source,
+      cable.maxWatts ?? "",
+      cable.dataGbps ?? "",
+      cable.videoVerified,
+      cable.eMarker,
+      item?.confidence ?? "",
+      joinList(item?.strengths),
+      joinList(item?.flags),
+      joinList(item?.nextChecks)
+    ];
+  });
+
+  return [headers, ...rows].map((row) => row.map(csvCell).join(",")).join("\n");
+}
+
 export function getPowerTier(watts) {
   if (watts === null) {
     return {
@@ -158,6 +199,15 @@ function cleanText(value, fallback) {
 
 function powerTier(label, short, rank, summary) {
   return { label, short, rank, summary };
+}
+
+function joinList(items) {
+  return Array.isArray(items) ? items.join(" | ") : "";
+}
+
+function csvCell(value) {
+  const text = String(value ?? "");
+  return /[",\n]/.test(text) ? `"${text.replaceAll('"', '""')}"` : text;
 }
 
 function getFlags(cable, power, data, video) {

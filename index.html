@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Cable Card</title>
     <meta name="description" content="Offline USB-C cable capability card and label generator.">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2064%2064%27%3E%3Crect%20width%3D%2764%27%20height%3D%2764%27%20rx%3D%2714%27%20fill%3D%27%232f8a73%27%2F%3E%3Cpath%20d%3D%27M18%2034h28M24%2026h16M24%2042h16%27%20stroke%3D%27white%27%20stroke-width%3D%276%27%20stroke-linecap%3D%27round%27%2F%3E%3C%2Fsvg%3E">
     <link rel="stylesheet" href="./styles.css">
   </head>
   <body>
@@ -152,7 +153,10 @@
       <section class="tool-panel drawer-panel" aria-label="Saved cable drawer">
         <div class="panel-title">
           <h2>Drawer</h2>
-          <button type="button" class="ghost-button" id="clear-drawer-button">Clear</button>
+          <div class="button-row">
+            <button type="button" id="export-drawer-button">Export CSV</button>
+            <button type="button" class="ghost-button" id="clear-drawer-button">Clear</button>
+          </div>
         </div>
         <p id="drawer-empty" class="empty-note">No saved cable cards yet.</p>
         <ul id="drawer-list" class="drawer-list"></ul>

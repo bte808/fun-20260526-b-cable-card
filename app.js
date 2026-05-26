@@ -1,4 +1,4 @@
-import { DEFAULT_CABLE, generateCableCard } from "./src/cableCard.mjs";
+import { DEFAULT_CABLE, generateCableCard, toDrawerCsv } from "./src/cableCard.mjs";
 
 const form = document.querySelector("#cable-form");
 const output = document.querySelector("#output");
@@ -11,6 +11,7 @@ const printButton = document.querySelector("#print-button");
 const sampleButton = document.querySelector("#sample-button");
 const resetButton = document.querySelector("#reset-button");
 const addButton = document.querySelector("#add-button");
+const exportDrawerButton = document.querySelector("#export-drawer-button");
 const clearDrawerButton = document.querySelector("#clear-drawer-button");
 
 const fields = {
@@ -128,6 +129,7 @@ function renderDrawer() {
     </li>
   `).join("");
   drawerEmpty.hidden = items.length > 0;
+  exportDrawerButton.disabled = items.length === 0;
   clearDrawerButton.disabled = items.length === 0;
 }
 
@@ -135,6 +137,7 @@ function addCurrentToDrawer() {
   const items = loadDrawer();
   const next = [currentCard.json, ...items.filter((item) => item.cable.name !== currentCard.cable.name)];
   saveDrawer(next);
+  flash(addButton, "Added");
 }
 
 async function copyMarkdown() {
@@ -149,11 +152,22 @@ async function copyMarkdown() {
 }
 
 function downloadJson() {
-  const blob = new Blob([JSON.stringify(currentCard.json, null, 2)], { type: "application/json" });
+  downloadText(`${slugify(currentCard.cable.name)}-cable-card.json`, JSON.stringify(currentCard.json, null, 2), "application/json");
+}
+
+function downloadDrawerCsv() {
+  const items = loadDrawer();
+  if (!items.length) return;
+  downloadText("cable-drawer.csv", toDrawerCsv(items), "text/csv");
+  flash(exportDrawerButton, "Exported");
+}
+
+function downloadText(filename, text, type) {
+  const blob = new Blob([text], { type });
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
   link.href = url;
-  link.download = `${slugify(currentCard.cable.name)}-cable-card.json`;
+  link.download = filename;
   link.click();
   URL.revokeObjectURL(url);
 }
@@ -212,6 +226,7 @@ copyButton.addEventListener("click", copyMarkdown);
 saveButton.addEventListener("click", downloadJson);
 printButton.addEventListener("click", () => window.print());
 addButton.addEventListener("click", addCurrentToDrawer);
+exportDrawerButton.addEventListener("click", downloadDrawerCsv);
 clearDrawerButton.addEventListener("click", () => saveDrawer([]));
 drawerList.addEventListener("click", (event) => {
   const button = event.target.closest("[data-index]");

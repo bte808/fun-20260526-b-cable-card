@@ -31,8 +31,11 @@ const card = generateCableCard({
 const checks = [
   [html.includes('script type="module"'), "index loads module script"],
   [html.includes("Cable Card"), "index has app title"],
+  [html.includes('rel="icon"'), "inline favicon exists"],
+  [html.includes("export-drawer-button"), "drawer CSV export button exists"],
   [css.includes("@media (max-width: 640px)"), "mobile CSS exists"],
   [app.includes("navigator.clipboard"), "copy action exists"],
+  [app.includes("downloadDrawerCsv"), "drawer CSV export action exists"],
   [readme.includes("https://www.producthunt.com/products/whatcable"), "README cites inspiration"],
   [card.markdown.includes("Check cable"), "core generator returns markdown"]
 ];

@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { generateCableCard, getDataTier, getPowerTier, normalizeCable, parseNumber } from "../src/cableCard.mjs";
+import { generateCableCard, getDataTier, getPowerTier, normalizeCable, parseNumber, toDrawerCsv } from "../src/cableCard.mjs";
 
 test("parseNumber accepts blank and numeric values", () => {
   assert.equal(parseNumber(""), null);
@@ -56,4 +56,25 @@ test("complete verified cable gets a strong card", () => {
   assert.equal(card.video.short, "VID OK");
   assert.ok(card.confidence >= 90);
   assert.ok(card.strengths.includes("Verified display path"));
+});
+
+test("drawer CSV exports saved cards with escaped notes", () => {
+  const card = generateCableCard({
+    name: 'Desk "fast" cable',
+    location: "Drawer, left side",
+    connector: "USB-C to USB-C",
+    lengthM: 1,
+    color: "Black",
+    source: "tester",
+    maxWatts: 100,
+    dataGbps: 20,
+    videoVerified: "yes",
+    eMarker: "yes"
+  });
+  const csv = toDrawerCsv([card.json]);
+
+  assert.match(csv, /^name,location,connector/);
+  assert.match(csv, /"Desk ""fast"" cable"/);
+  assert.match(csv, /"Drawer, left side"/);
+  assert.match(csv, /Laptop charging/);
 });

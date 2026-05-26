@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cable Card</title>
+    <meta name="description" content="Offline USB-C cable capability card and label generator.">
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="header-copy">
+        <p class="eyebrow">Local-first utility</p>
+        <h1>Cable Card</h1>
+        <p>Turn a mystery USB-C cable into a print-ready capability tag.</p>
+      </div>
+      <svg class="cable-visual" viewBox="0 0 420 160" role="img" aria-label="USB-C cable loop illustration">
+        <defs>
+          <linearGradient id="wire" x1="0" x2="1">
+            <stop offset="0" stop-color="#2f8a73"/>
+            <stop offset="0.52" stop-color="#3d7bd9"/>
+            <stop offset="1" stop-color="#c05827"/>
+          </linearGradient>
+        </defs>
+        <path d="M58 94 C122 24 190 24 218 87 S310 148 365 70" fill="none" stroke="url(#wire)" stroke-width="18" stroke-linecap="round"/>
+        <rect x="24" y="76" width="58" height="36" rx="10" fill="#252525"/>
+        <rect x="338" y="52" width="58" height="36" rx="10" fill="#252525"/>
+        <rect x="36" y="86" width="28" height="16" rx="5" fill="#f7f7f3"/>
+        <rect x="356" y="62" width="28" height="16" rx="5" fill="#f7f7f3"/>
+        <circle cx="210" cy="86" r="22" fill="#ffffff" stroke="#252525" stroke-width="5"/>
+        <path d="M200 86 h20 M210 76 v20" stroke="#252525" stroke-width="5" stroke-linecap="round"/>
+      </svg>
+    </header>
+
+    <main class="app-shell">
+      <section class="tool-panel form-panel" aria-label="Cable inputs">
+        <div class="panel-title">
+          <h2>Cable facts</h2>
+          <div class="button-row">
+            <button type="button" class="ghost-button" id="sample-button">Sample</button>
+            <button type="button" class="ghost-button" id="reset-button">Reset</button>
+          </div>
+        </div>
+
+        <form id="cable-form">
+          <label>
+            <span>Name</span>
+            <input name="name" autocomplete="off">
+          </label>
+
+          <div class="split">
+            <label>
+              <span>Location</span>
+              <input name="location" autocomplete="off">
+            </label>
+            <label>
+              <span>Color/mark</span>
+              <input name="color" autocomplete="off">
+            </label>
+          </div>
+
+          <div class="split">
+            <label>
+              <span>Connector</span>
+              <select name="connector">
+                <option>USB-C to USB-C</option>
+                <option>USB-C to USB-A</option>
+                <option>USB-C to Lightning</option>
+                <option>USB-C to Micro USB</option>
+                <option>Other</option>
+              </select>
+            </label>
+            <label>
+              <span>Length (m)</span>
+              <input name="lengthM" type="number" min="0" step="0.1">
+            </label>
+          </div>
+
+          <div class="triple">
+            <label>
+              <span>Power</span>
+              <select name="maxWatts">
+                <option value="">Unknown</option>
+                <option value="15">15W</option>
+                <option value="30">30W</option>
+                <option value="60">60W</option>
+                <option value="100">100W</option>
+                <option value="140">140W</option>
+                <option value="240">240W</option>
+              </select>
+            </label>
+            <label>
+              <span>Data</span>
+              <select name="dataGbps">
+                <option value="">Unknown</option>
+                <option value="0.48">480 Mbps</option>
+                <option value="5">5 Gbps</option>
+                <option value="10">10 Gbps</option>
+                <option value="20">20 Gbps</option>
+                <option value="40">40 Gbps</option>
+                <option value="80">80 Gbps</option>
+              </select>
+            </label>
+            <label>
+              <span>Source</span>
+              <select name="source">
+                <option value="manual">Manual</option>
+                <option value="label">Printed label</option>
+                <option value="listing">Product listing</option>
+                <option value="tester">USB tester</option>
+                <option value="whatcable">Cable utility</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="split">
+            <fieldset>
+              <legend>Video</legend>
+              <label><input type="radio" name="videoVerified" value="yes"> Yes</label>
+              <label><input type="radio" name="videoVerified" value="no"> No</label>
+              <label><input type="radio" name="videoVerified" value="unknown"> Unknown</label>
+            </fieldset>
+            <fieldset>
+              <legend>E-marker</legend>
+              <label><input type="radio" name="eMarker" value="yes"> Yes</label>
+              <label><input type="radio" name="eMarker" value="no"> No</label>
+              <label><input type="radio" name="eMarker" value="unknown"> Unknown</label>
+            </fieldset>
+          </div>
+
+          <label>
+            <span>Notes</span>
+            <textarea name="notes" rows="4"></textarea>
+          </label>
+        </form>
+      </section>
+
+      <section class="tool-panel result-panel" aria-label="Generated result">
+        <div class="panel-title">
+          <h2>Output</h2>
+          <div class="button-row">
+            <button type="button" id="copy-button">Copy</button>
+            <button type="button" id="save-button">Save JSON</button>
+            <button type="button" id="print-button">Print</button>
+          </div>
+        </div>
+        <div id="output"></div>
+        <textarea id="markdown-output" aria-label="Generated markdown"></textarea>
+        <button type="button" class="wide-button" id="add-button">Add to drawer</button>
+      </section>
+
+      <section class="tool-panel drawer-panel" aria-label="Saved cable drawer">
+        <div class="panel-title">
+          <h2>Drawer</h2>
+          <button type="button" class="ghost-button" id="clear-drawer-button">Clear</button>
+        </div>
+        <p id="drawer-empty" class="empty-note">No saved cable cards yet.</p>
+        <ul id="drawer-list" class="drawer-list"></ul>
+      </section>
+    </main>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

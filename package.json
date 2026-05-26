@@ -1,0 +1,19 @@
+{
+  "name": "fun-20260526-b-cable-card",
+  "version": "1.0.0",
+  "description": "Offline USB-C cable capability card and label generator.",
+  "type": "module",
+  "scripts": {
+    "test": "node --test",
+    "check": "node scripts/check.mjs"
+  },
+  "keywords": [
+    "usb-c",
+    "cable",
+    "label",
+    "productivity",
+    "local-first"
+  ],
+  "author": "bte808",
+  "license": "MIT"
+}

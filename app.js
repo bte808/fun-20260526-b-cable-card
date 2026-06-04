@@ -1,4 +1,4 @@
-import { DEFAULT_CABLE, generateCableCard, toDrawerCsv } from "./src/cableCard.mjs";
+import { DEFAULT_CABLE, generateCableCard, toDrawerCsv, toLabelText } from "./src/cableCard.mjs";
 
 const form = document.querySelector("#cable-form");
 const output = document.querySelector("#output");
@@ -6,6 +6,7 @@ const markdownOutput = document.querySelector("#markdown-output");
 const drawerList = document.querySelector("#drawer-list");
 const drawerEmpty = document.querySelector("#drawer-empty");
 const copyButton = document.querySelector("#copy-button");
+const copyLabelButton = document.querySelector("#copy-label-button");
 const saveButton = document.querySelector("#save-button");
 const printButton = document.querySelector("#print-button");
 const sampleButton = document.querySelector("#sample-button");
@@ -141,13 +142,22 @@ function addCurrentToDrawer() {
 }
 
 async function copyMarkdown() {
+  await copyText(currentCard.markdown, copyButton, "Copied");
+}
+
+async function copyLabel() {
+  await copyText(toLabelText(currentCard), copyLabelButton, "Label copied");
+}
+
+async function copyText(text, button, copiedText) {
   try {
-    await navigator.clipboard.writeText(currentCard.markdown);
-    flash(copyButton, "Copied");
+    await navigator.clipboard.writeText(text);
+    flash(button, copiedText);
   } catch {
+    markdownOutput.value = text;
     markdownOutput.focus();
     markdownOutput.select();
-    flash(copyButton, "Select");
+    flash(button, "Select");
   }
 }
 
@@ -223,6 +233,7 @@ form.addEventListener("change", render);
 sampleButton.addEventListener("click", () => writeForm(DEFAULT_CABLE));
 resetButton.addEventListener("click", resetForm);
 copyButton.addEventListener("click", copyMarkdown);
+copyLabelButton.addEventListener("click", copyLabel);
 saveButton.addEventListener("click", downloadJson);
 printButton.addEventListener("click", () => window.print());
 addButton.addEventListener("click", addCurrentToDrawer);

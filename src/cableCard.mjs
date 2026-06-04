@@ -118,6 +118,26 @@ export function toDrawerCsv(items = []) {
   return [headers, ...rows].map((row) => row.map(csvCell).join(",")).join("\n");
 }
 
+export function toLabelText(card) {
+  const labelLines = Array.isArray(card?.labelLines) ? card.labelLines : [];
+  const cable = normalizeCable(card?.cable ?? {});
+  const confidence = Number.isFinite(card?.confidence) ? `${card.confidence}% confidence` : "confidence unknown";
+  const bestUse = Array.isArray(card?.strengths) && card.strengths.length
+    ? card.strengths.slice(0, 2).join(" / ")
+    : "Use after checking capability";
+  const firstCheck = Array.isArray(card?.nextChecks) && card.nextChecks.length
+    ? card.nextChecks[0]
+    : "Print the card and put the cable back in the drawer.";
+
+  return [
+    ...labelLines,
+    `${cable.location} | ${confidence}`,
+    `Best: ${bestUse}`,
+    `Next: ${firstCheck}`,
+    "Demo: https://bte808.github.io/fun-20260526-b-cable-card/"
+  ].join("\n");
+}
+
 export function getPowerTier(watts) {
   if (watts === null) {
     return {

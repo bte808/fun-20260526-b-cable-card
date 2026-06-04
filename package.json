@@ -2,6 +2,7 @@
   "name": "fun-20260526-b-cable-card",
   "version": "1.0.0",
   "description": "Offline USB-C cable capability card and label generator.",
+  "homepage": "https://bte808.github.io/fun-20260526-b-cable-card/",
   "type": "module",
   "scripts": {
     "test": "node --test",
@@ -11,7 +12,9 @@
     "usb-c",
     "cable",
     "label",
+    "label-maker",
     "productivity",
+    "github-pages",
     "local-first"
   ],
   "author": "bte808",

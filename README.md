@@ -13,6 +13,7 @@ WhatCable reads cable capability data where the platform allows it. Cable Card i
 - Generate a compact label with power, data, video, e-marker, length, and connector fields.
 - Turn incomplete cable facts into a confidence score, best-use list, flags, and next checks.
 - Copy a Markdown capability card for notes, docs, or a home inventory.
+- Copy a short physical label text for a label maker, sticky note, or chat message.
 - Download a JSON export for one cable.
 - Print a label-sized card.
 - Save recent cards in local browser storage.
@@ -22,6 +23,14 @@ WhatCable reads cable capability data where the platform allows it. Cable Card i
 ## Why it is useful
 
 USB-C cables often look identical while behaving very differently. A clear label reduces trial-and-error when charging a laptop, connecting a monitor, picking a travel cable, or choosing a cable for SSD backups.
+
+## Live demo
+
+Use the public demo here: <https://bte808.github.io/fun-20260526-b-cable-card/>
+
+## 2026-06-04 Maintenance Update
+
+This pass adds **Copy label**, which exports the compact physical label plus location, confidence, best use, next check, and the demo link. It is shorter than the full Markdown card, so it fits label makers, sticky notes, and quick drawer-inventory messages.
 
 ## How to run
 
@@ -41,7 +50,7 @@ http://localhost:5196
 
 1. Fill the cable facts or use the included sample.
 2. Review the generated capability card.
-3. Copy the Markdown, save JSON, print a label, or add it to the local drawer.
+3. Copy the short label, copy the full Markdown, save JSON, print a label, or add it to the local drawer.
 4. Export the drawer CSV when you want a small inventory sheet.
 
 ## Validation

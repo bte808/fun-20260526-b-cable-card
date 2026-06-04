@@ -1,6 +1,14 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { generateCableCard, getDataTier, getPowerTier, normalizeCable, parseNumber, toDrawerCsv } from "../src/cableCard.mjs";
+import {
+  generateCableCard,
+  getDataTier,
+  getPowerTier,
+  normalizeCable,
+  parseNumber,
+  toDrawerCsv,
+  toLabelText
+} from "../src/cableCard.mjs";
 
 test("parseNumber accepts blank and numeric values", () => {
   assert.equal(parseNumber(""), null);
@@ -77,4 +85,25 @@ test("drawer CSV exports saved cards with escaped notes", () => {
   assert.match(csv, /"Desk ""fast"" cable"/);
   assert.match(csv, /"Drawer, left side"/);
   assert.match(csv, /Laptop charging/);
+});
+
+test("label text exports short physical tag notes", () => {
+  const card = generateCableCard({
+    name: "Desk dock cable",
+    location: "Desk tray",
+    connector: "USB-C to USB-C",
+    lengthM: 1,
+    source: "tester",
+    maxWatts: 100,
+    dataGbps: 10,
+    videoVerified: "unknown",
+    eMarker: "yes"
+  });
+  const label = toLabelText(card);
+
+  assert.match(label, /Desk dock cable/);
+  assert.match(label, /Desk tray/);
+  assert.match(label, /Best:/);
+  assert.match(label, /fun-20260526-b-cable-card/);
+  assert.doesNotMatch(label, /## Capabilities/);
 });

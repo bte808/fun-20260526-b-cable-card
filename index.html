@@ -5,8 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Cable Card</title>
     <meta name="description" content="Offline USB-C cable capability card and label generator.">
+    <meta property="og:title" content="Cable Card">
+    <meta property="og:description" content="Local-first USB-C cable labels, capability cards, and drawer CSV exports.">
+    <meta property="og:url" content="https://bte808.github.io/fun-20260526-b-cable-card/">
     <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2064%2064%27%3E%3Crect%20width%3D%2764%27%20height%3D%2764%27%20rx%3D%2714%27%20fill%3D%27%232f8a73%27%2F%3E%3Cpath%20d%3D%27M18%2034h28M24%2026h16M24%2042h16%27%20stroke%3D%27white%27%20stroke-width%3D%276%27%20stroke-linecap%3D%27round%27%2F%3E%3C%2Fsvg%3E">
-    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="./styles.css?v=20260604">
   </head>
   <body>
     <header class="app-header">
@@ -141,6 +144,7 @@
           <h2>Output</h2>
           <div class="button-row">
             <button type="button" id="copy-button">Copy</button>
+            <button type="button" id="copy-label-button">Copy label</button>
             <button type="button" id="save-button">Save JSON</button>
             <button type="button" id="print-button">Print</button>
           </div>
@@ -163,6 +167,6 @@
       </section>
     </main>
 
-    <script type="module" src="./app.js"></script>
+    <script type="module" src="./app.js?v=20260604"></script>
   </body>
 </html>
